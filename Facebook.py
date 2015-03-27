@@ -14,7 +14,7 @@ friends = g.get_connections("me", "friends")['data']
 
 personalData= {'personal': personalData, 'likes':myLikes, 'events': myEvents, 'friends':friendList }
         
-def friendData(type):     #type can me either "likes" or "events"    
+def friendData(type):     #type can be either "likes" or "events"    
 	for friend in friends:
 		name = friend['name']
 		friendid = friend['id']
