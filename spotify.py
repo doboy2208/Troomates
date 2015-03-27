@@ -71,4 +71,4 @@ def getUserData():
 	
 getSpotifyTracks(tempurl, bearer_token, agent)
 
-#getUserData()
+getUserData()
