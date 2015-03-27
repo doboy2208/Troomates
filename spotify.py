@@ -5,10 +5,11 @@ import urllib2
 from pprint import pprint
 
 tempurl = 'https://api.spotify.com/v1/me/tracks?offset='
-bearer_token = 'BQAGwVV3rQiEP48so8L9zxJFT8s31w3bnS6lBQkkwmX98w9Ce25uAhz2All4cgqLcd2YA98tVdOrDHgHTW7KO-VoC9S7uEhFcNLIjhHwVSC3w0JNXkUOx3FZ73eLxH3TKmGHNWxiwx-j6qweg6CL'
+bearer_token = 'BQBt-np8B0JQrxNSGbVVVB-SgHTinMGDfdIr1zGfiEEiEICtjbbbcnBu8w8S0XTmL4CfP4sqHrkupBY0SDEy9JfD1LMa-ZtQC0SuHykRsKOiXV_Ya_Fj9YCcDed2BDQbX8XqnDhOTZ12aDzID6bQzfQ9oUZu_g2cS4Vd1J2ITjbr6qY'
 agent = 'Spotify API Console v0.1'
 
 def getSpotifyTracks(tempurl, bearer_token, agent):
+	outputList =[]
 	req = urllib2.Request(tempurl+"0")
 	req.add_header('Authorization', 'Bearer '+ bearer_token + '')
 	req.add_header('User-Agent', agent)
@@ -28,7 +29,6 @@ def getSpotifyTracks(tempurl, bearer_token, agent):
 		response1 = urllib2.urlopen(req)
 		data = json.loads(response1.read())['items']
 		c = c+20
-	
 		for item in data:
 			trackName = item['track']['name']
 			albumName = item['track']['album']['name']
@@ -44,9 +44,10 @@ def getSpotifyTracks(tempurl, bearer_token, agent):
 				for item in data:
 					genre = str(item['genres'])
 			output = trackID + ";" + trackName + ";" + artistID + ";" + artistName + ";" + genre
-			file=open('output.txt', 'a+')
-			#pprint(output, file)
-			pprint(output)
+			outputDict = {'trackid' : trackID, 'trackname' : trackName, 'artistID' : artistID, 'artistname' : artistName, 'genre' : genre}
+			outputList.extend([outputDict]) 
+			file=open('usertracks.txt', 'a+')
+			pprint(output, file)
 						
 def getUserData():
 	url = 'https://api.spotify.com/v1/me'
@@ -67,8 +68,11 @@ def getUserData():
 	profileURL = data ['external_urls']['spotify']
 	
 	output = spID + ";" + name + ";" + email + ";" + birthday + ";" + profileURL
-	pprint(output)
+	outputDict = {'userspid' : spID, 'username' : name, 'useremail' : email, 'userbirthday' : birthday, 'profileurl' : profileURL}
+	
+	file=open('userdata.txt', 'a+')
+	pprint(output, file)
 	
 getSpotifyTracks(tempurl, bearer_token, agent)
 
-getUserData()
+#getUserData()
