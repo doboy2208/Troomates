@@ -28,7 +28,7 @@ def friendData(type):     #type can be either "likes" or "events"
 	
 friendData("likes")
 
-#pprint(personalData)
+pprint(personalData)
 
 
 
